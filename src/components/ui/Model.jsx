@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 
-const Model = ({model}) => {
+const Model = ({model, setBookingOpen}) => {
   return (
     <div className="model">
       {/* Vehicle model items will be rendered here */}
@@ -37,7 +37,7 @@ const Model = ({model}) => {
           <span className="model__detail__text">{model.transmission}</span>
         </div>
       </div>
-      <button className="model__btn">
+      <button className="model__btn" onClick={() => setBookingOpen(true)}>
         <span className="model__btn__">Book Ride</span>
         <FontAwesomeIcon icon={faCircleCheck} />
       </button>

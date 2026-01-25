@@ -1,29 +1,31 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import Model from "./ui/Model";
 import ModelSkeleton from "./ui/ModelSkeleton";
 
-const VehicleModels = () => {
-  const [carModels, setCarModels] = useState([]);
-
+const VehicleModels = ({carModels, setCarModels, setBookingOpen}) => {
+  const [sort, setSort] = useState("");
 
   function sortModels() {
-    console.log("Sorting models")
+    if (sort === "HIGH_TO_LOW") {
+      setCarModels(
+        carModels.slice().sort((a, b) => b.per_day_price - a.per_day_price),
+      );
+    } else if (sort === "LOW_TO_HIGH") {
+      setCarModels(
+        carModels.slice().sort((a, b) => a.per_day_price - b.per_day_price),
+      );
+    } else if (sort === "RATING") {
+      setCarModels(carModels.slice().sort((a, b) => b.rating - a.rating));
+    }
   }
 
-
-  async function fetchModels() {
-    const { data } = await axios.get(
-      "https://car-rental-api.up.railway.app/car",
-    );
-    const models = data.data;
-    setCarModels(models);
-  }
+  
 
   useEffect(() => {
-    fetchModels();
-  }, []);
+    sortModels();
+  }, [sort]);
 
   return (
     <section id="models">
@@ -31,7 +33,11 @@ const VehicleModels = () => {
         <div className="row models__row">
           <div className="models__header">
             <h2 className="models__header__title">Vehicle Models</h2>
-            <select defaultValue="" className="models__header__sort" onChange={() => sortModels()}>
+            <select
+              value={sort}
+              className="models__header__sort"
+              onChange={(event) => setSort(event.target.value)}
+            >
               <option
                 value=""
                 disabled
@@ -58,8 +64,10 @@ const VehicleModels = () => {
           </div>
           <div className="models__list">
             {carModels.length > 0
-              ? carModels.map((model) => <Model model={model} key={model.id} />)
-              : new Array(20).fill(0).map((_,index) => <ModelSkeleton key={index}/>)}
+              ? carModels.map((model) => <Model model={model} key={model.id} setBookingOpen={setBookingOpen}/>)
+              : new Array(20)
+                  .fill(0)
+                  .map((_, index) => <ModelSkeleton key={index} />)}
           </div>
         </div>
       </div>
