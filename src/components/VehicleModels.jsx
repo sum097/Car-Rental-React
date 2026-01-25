@@ -1,19 +1,39 @@
-import React from "react";
-import CarModel from "../assets/model-img.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCar, faCircleCheck, faStar } from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
+import Model from "./ui/Model";
+import ModelSkeleton from "./ui/ModelSkeleton";
 
 const VehicleModels = () => {
+  const [carModels, setCarModels] = useState([]);
+
+
+  function sortModels() {
+    console.log("Sorting models")
+  }
+
+
+  async function fetchModels() {
+    const { data } = await axios.get(
+      "https://car-rental-api.up.railway.app/car",
+    );
+    const models = data.data;
+    setCarModels(models);
+  }
+
+  useEffect(() => {
+    fetchModels();
+  }, []);
+
   return (
     <section id="models">
       <div className="container">
         <div className="row models__row">
           <div className="models__header">
             <h2 className="models__header__title">Vehicle Models</h2>
-            <select className="models__header__sort">
+            <select defaultValue="" className="models__header__sort" onChange={() => sortModels()}>
               <option
                 value=""
-                selected
                 disabled
                 className="models__header__sort__option"
               >
@@ -37,51 +57,9 @@ const VehicleModels = () => {
             </select>
           </div>
           <div className="models__list">
-            <div className="model">
-              {/* Vehicle model items will be rendered here */}
-              <img src={CarModel} alt="" className="model__img" />
-              <div className="model__details model__details-1">
-                <h3 className="model__details__name">Toyota Camry</h3>
-                <h4 className="model__details__price">
-                  $50{" "}
-                  <span className="model__details__price__span">per day</span>
-                </h4>
-              </div>
-              <div className="model__details model__details-2">
-                <div className="model__detail">
-                  <FontAwesomeIcon
-                    icon={faStar}
-                    className="model__detail__icon"
-                  />
-                  <span className="model__detail__text">4.2 / 5</span>
-                </div>
-                <div className="model__detail model__detail-right">
-                  <FontAwesomeIcon
-                    icon={faCar}
-                    className="model__detail__icon"
-                  />
-                  <span className="model__detail__text">Petrol</span>
-                </div>
-                <div className="model__detail">
-                  <FontAwesomeIcon
-                    icon={faCar}
-                    className="model__detail__icon"
-                  />
-                  <span className="model__detail__text">Toyota</span>
-                </div>
-                <div className="model__detail model__detail-right">
-                  <FontAwesomeIcon
-                    icon={faCar}
-                    className="model__detail__icon"
-                  />
-                  <span className="model__detail__text">Automatic</span>
-                </div>
-              </div>
-              <button className="model__btn">
-                <span className="model__btn__">Book Ride</span>
-                <FontAwesomeIcon icon={faCircleCheck} />
-              </button>
-            </div>
+            {carModels.length > 0
+              ? carModels.map((model) => <Model model={model} key={model.id} />)
+              : new Array(20).fill(0).map((_,index) => <ModelSkeleton key={index}/>)}
           </div>
         </div>
       </div>
