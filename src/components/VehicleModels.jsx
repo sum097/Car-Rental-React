@@ -4,7 +4,12 @@ import { useState } from "react";
 import Model from "./ui/Model";
 import ModelSkeleton from "./ui/ModelSkeleton";
 
-const VehicleModels = ({carModels, setCarModels, setBookingOpen}) => {
+const VehicleModels = ({
+  carModels,
+  setCarModels,
+  setBookingOpen,
+  setSelectModel,
+}) => {
   const [sort, setSort] = useState("");
 
   function sortModels() {
@@ -20,8 +25,6 @@ const VehicleModels = ({carModels, setCarModels, setBookingOpen}) => {
       setCarModels(carModels.slice().sort((a, b) => b.rating - a.rating));
     }
   }
-
-  
 
   useEffect(() => {
     sortModels();
@@ -64,7 +67,14 @@ const VehicleModels = ({carModels, setCarModels, setBookingOpen}) => {
           </div>
           <div className="models__list">
             {carModels.length > 0
-              ? carModels.map((model) => <Model model={model} key={model.id} setBookingOpen={setBookingOpen}/>)
+              ? carModels.map((model) => (
+                  <Model
+                    model={model}
+                    key={model.id}
+                    setBookingOpen={setBookingOpen}
+                    setSelectModel={setSelectModel}
+                  />
+                ))
               : new Array(20)
                   .fill(0)
                   .map((_, index) => <ModelSkeleton key={index} />)}

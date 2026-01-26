@@ -7,16 +7,22 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 
-
-const Model = ({model, setBookingOpen}) => {
+const Model = ({ model, setBookingOpen, setSelectModel }) => {
   return (
     <div className="model">
       {/* Vehicle model items will be rendered here */}
-      <img src={`https://car-rental-api.up.railway.app//${model.image}`} alt="" className="model__img" />
+      <img
+        src={`https://car-rental-api.up.railway.app//${model.image}`}
+        alt=""
+        className="model__img"
+      />
       <div className="model__details model__details-1">
-        <h3 className="model__details__name">{model.make} {model.model}</h3>
+        <h3 className="model__details__name">
+          {model.make} {model.model}
+        </h3>
         <h4 className="model__details__price">
-          ${Math.floor(model.per_day_price)} <span className="model__details__price__span">per day</span>
+          ${Math.floor(model.per_day_price)}{" "}
+          <span className="model__details__price__span">per day</span>
         </h4>
       </div>
       <div className="model__details model__details-2">
@@ -37,7 +43,13 @@ const Model = ({model, setBookingOpen}) => {
           <span className="model__detail__text">{model.transmission}</span>
         </div>
       </div>
-      <button className="model__btn" onClick={() => setBookingOpen(true)}>
+      <button
+        className="model__btn"
+        onClick={() => {
+          setSelectModel(`${model.make} ${model.model}`);
+          setBookingOpen(true);
+        }}
+      >
         <span className="model__btn__">Book Ride</span>
         <FontAwesomeIcon icon={faCircleCheck} />
       </button>

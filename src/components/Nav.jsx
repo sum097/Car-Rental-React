@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import NavLogo from "../assets/logo.png";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -11,16 +12,16 @@ const Nav = () => {
     <>
       <nav>
         <div className="nav__container">
-          <a href="" className="nav__img__wrapper">
+          <Link to="/" className="nav__img__wrapper">
             <img src={NavLogo} alt="" className="nav__img" />
-          </a>
+          </Link>
           <div className="nav__links">
-            <a href="#" className="nav__link">
+            <Link to="/" className="nav__link">
               Home
-            </a>
-            <a href="#" className="nav__link">
+            </Link>
+            <Link to="Models" className="nav__link">
               Vehicle Models
-            </a>
+            </Link>
             <a href="#" className="nav__link disabled">
               Testimonials
             </a>
@@ -60,12 +61,12 @@ const Nav = () => {
           <FontAwesomeIcon icon={faTimes} />
         </button>
         <div className="menu__links">
-          <a href="#" className="menu__link" onClick={() => setMenuOpen(false)}>
+          <Link to="/" className="menu__link" onClick={() => setMenuOpen(false)}>
             Home
-          </a>
-          <a href="#" className="menu__link" onClick={() => setMenuOpen(false)}>
+          </Link>
+          <Link to="Models" className="menu__link" onClick={() => setMenuOpen(false)}>
             Vehicle Models
-          </a>
+          </Link>
           <a href="#" className="menu__link disabled" onClick={() => setMenuOpen(false)}>
             Testimonials
           </a>

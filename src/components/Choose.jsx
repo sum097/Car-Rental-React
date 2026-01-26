@@ -4,6 +4,7 @@ import Choose1 from "../assets/choose-1.png";
 import Choose2 from "../assets/choose-2.png";
 import Choose3 from "../assets/choose-3.png";
 import ChooseFeature from "./ui/ChooseFeature";
+import { Link } from "react-router-dom";
 
 const Choose = () => {
   return (
@@ -28,7 +29,9 @@ const Choose = () => {
                   give you the ultimate renting experience, so don't miss out on
                   your chance to save big.
                 </p>
+                <Link to="/Models">
                 <button className="choose__text__btn">Find details</button>
+                </Link>
               </div>
               <div className="choose__features">
                 <ChooseFeature
