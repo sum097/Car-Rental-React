@@ -1,5 +1,5 @@
 import Home from "./pages/Home";
-import Nav from "./components/nav";
+import Nav from "./components/Nav";
 import Models from "./pages/Models";
 import Footer from "./components/Footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
